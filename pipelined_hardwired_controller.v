@@ -51,17 +51,17 @@ module pipelined_hardwired_controller (
 	always @(negedge T3 or negedge CLR)
 	begin
 		if (!CLR) begin
-			Q = 3'b000;
+			Q <= 3'b000;
 		end
 		else begin
 			case  (SWC_SWB_SWA)
-				3'b100:  Q=3'b100;
-				3'b011:  Q=3'b011;
-				3'b000:  Q=3'b000;
-				3'b010:  Q=3'b010;
-				3'b001:  Q=3'b001;
+				3'b100:  Q<=3'b100;
+				3'b011:  Q<=3'b011;
+				3'b000:  Q<=3'b000;
+				3'b010:  Q<=3'b010;
+				3'b001:  Q<=3'b001;
 			    default:
-			             Q=3'b111;
+			             Q<=3'b111;
 			 endcase
 		end
 	end			
@@ -387,6 +387,8 @@ module pipelined_hardwired_controller (
                                 LDC = 1'b1;
                                 S = 4'b1111;
                             end
+                        end
+                        default: begin // 所有 16 种编码均已覆盖，default 不可达，保留以符合规范。
                         end
                     endcase
                 end
