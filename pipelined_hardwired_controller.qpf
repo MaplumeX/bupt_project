@@ -27,4 +27,4 @@ DATE = "14:25:55  June 30, 2025"
 
 # Revisions
 
-PROJECT_REVISION = "ver1"
+PROJECT_REVISION = "pipelined_hardwired_controller"

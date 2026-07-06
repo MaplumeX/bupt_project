@@ -5,7 +5,7 @@
 // 1. 模式锁存：在 T3 下降沿采样当前工作模式；
 // 2. ST0 状态位：区分手动操作或取指流程中的前后阶段；
 // 3. 控制信号译码：根据模式、指令和节拍输出具体微操作控制信号。
-module ver1 (
+module pipelined_hardwired_controller (
         // 输入端口
         input wire [2:0] SWC_SWB_SWA,      // 模式选择信号
         input wire [3:0] IR7_IR4,          // 指令寄存器高 4 位

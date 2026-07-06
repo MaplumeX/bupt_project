@@ -4,7 +4,7 @@ JedecChain;
 	DefaultMfr(6E);
 
 	P ActionCode(Cfg)
-		Device PartName(EPM7128SL84) Path("E:/ver1/") File("ver1.pof") MfrSpec(OpMask(23));
+		Device PartName(EPM7128SL84) Path("E:/pipelined_hardwired_controller/") File("pipelined_hardwired_controller.pof") MfrSpec(OpMask(23));
 
 ChainEnd;
 
