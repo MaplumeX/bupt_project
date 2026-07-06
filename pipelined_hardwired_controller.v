@@ -130,12 +130,12 @@ module pipelined_hardwired_controller (
         // 当前保留原有状态转换方式。
     end
     // SST0 是 ST0 的置位条件。
-    // 不同模式进入第二阶段所需的节拍不同：写寄存器和取指使用 W2，读/写存储器使用 W1。
+    // 不同模式进入第二阶段所需的节拍不同：写寄存器使用 W2，读/写存储器和取指使用 W1。
     assign SST0 = (ST0 == 1'b0) && (
                (SWC_SWB_SWA == 3'b100 && W2) || // 写寄存器模式，W2 有效
                (SWC_SWB_SWA == 3'b010 && W1) || // 读存储器模式，W1 有效
                (SWC_SWB_SWA == 3'b001 && W1) || // 写存储器模式，W1 有效
-               (SWC_SWB_SWA == 3'b000 && W2)
+               (SWC_SWB_SWA == 3'b000 && W1)
            );
 
     // 主控制组合逻辑。
@@ -223,12 +223,14 @@ module pipelined_hardwired_controller (
             end
             INS_FETCH: begin // 取指/执行模式：ST0=0 初始化 PC，ST0=1 根据 IR7_IR4 执行指令。
                 if (!ST0) begin
-                    if (W1) begin // 初始化 PC 前暂停，等待面板输入起始地址。
-                        STOP = 1'b1;
-                    end
-                    if (W2) begin // 将开关输入经 SBUS 装入 PC，作为程序起始地址。
+                    if (W1) begin // 将开关输入经 SBUS 装入 PC，并在本拍请求进入取指阶段。
                         SBUS = 1'b1;
                         LPC = 1'b1;
+                        STOP = 1'b1;
+                    end
+                    if (W2) begin // 修改 PC 后取第一条指令，并使 PC 指向下一条。
+                        LIR = 1'b1;
+                        PCINC = 1'b1;
                     end
                 end
                 else begin
