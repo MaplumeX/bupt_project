@@ -215,8 +215,7 @@ module pipelined_hardwired_controller (
                                 CIN = 1'b1;
                                 ABUS = 1'b1;
                                 LDZ = 1'b1;
-                                S[3] = 1'b1;
-                                S[0] = 1'b1;
+                                S = 4'b1001;
                             end
                         end
                         4'b0010: begin // SUB：执行减法，结果写回寄存器并更新 Z/C 标志。
@@ -228,8 +227,7 @@ module pipelined_hardwired_controller (
                                 ABUS = 1'b1;
                                 LDZ = 1'b1;
                                 LDC = 1'b1;
-                                S[2] = 1'b1;
-                                S[1] = 1'b1;
+                                S = 4'b0110;
                             end
                         end
                         4'b0011: begin // AND：执行按位与，结果写回寄存器并更新 Z 标志。
@@ -241,9 +239,7 @@ module pipelined_hardwired_controller (
                                 ABUS = 1'b1;
                                 LDZ = 1'b1;
                                 M = 1'b1;
-                                S[3] = 1'b1;
-                                S[1] = 1'b1;
-                                S[0] = 1'b1;
+                                S = 4'b1011;
                             end
                         end
                         4'b0100: begin // INC：执行自增，结果写回寄存器并更新 Z/C 标志。
@@ -262,8 +258,7 @@ module pipelined_hardwired_controller (
                                 LAR = 1'b1;
                                 ABUS = 1'b1;
                                 M = 1'b1;
-                                S[3] = 1'b1;
-                                S[1] = 1'b1;
+                                S = 4'b1010;
                             end
                             if (W2) begin // 长周期第 2 拍：存储器数据经 MBUS 写回寄存器，并取下一条指令。
                                 DRW = 1'b1;
@@ -283,8 +278,7 @@ module pipelined_hardwired_controller (
                                 MEMW = 1'b1;
                                 ABUS = 1'b1;
                                 M = 1'b1;
-                                S[3] = 1'b1;
-                                S[1] = 1'b1;
+                                S = 4'b1010;
                                 PCINC = 1'b1;
                                 LIR = 1'b1;
                             end
