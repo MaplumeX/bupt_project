@@ -62,7 +62,6 @@ set_location_assignment PIN_25 -to LAR
 set_location_assignment PIN_31 -to LDC
 set_location_assignment PIN_30 -to LDZ
 set_location_assignment PIN_29 -to LIR
-set_location_assignment PIN_46 -to LONG
 set_location_assignment PIN_22 -to LPC
 set_location_assignment PIN_39 -to M
 set_location_assignment PIN_44 -to MBUS
