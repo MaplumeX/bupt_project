@@ -184,16 +184,18 @@ module pipelined_hardwired_controller (
                     MEMW = ST0;
                 end
             end
-            INS_FETCH: begin // 取指/执行模式：ST0=0 初始化 PC，ST0=1 根据 IR7_IR4 执行指令。
+            INS_FETCH: begin // 取指/执行模式：ST0=0 装入 PC 起始地址，ST0=1 根据 IR7_IR4 执行指令。
                 if (!ST0) begin
-                    if (W1) begin // 将开关输入经 SBUS 装入 PC，并在本拍请求进入取指阶段。
+                    // 任意修改 PC 指针：仅在开始的一个 W1 内完成。
+                    // 用 SHORT 把本周期压成单拍，避免 SST0 在 W1 就把 ST0 翻 1 后
+                    // 与同一周期的 W2 取指发生冲突。本拍不取指（无 LIR），
+                    // 第一条指令的取指交给下一周期（ST0=1）的自然 NOP 流程：
+                    // 复位后 IR=00H=NOP，NOP 分支会输出 LIR+PCINC。
+                    if (W1) begin
                         SBUS = 1'b1;
                         LPC = 1'b1;
                         STOP = 1'b1;
-                    end
-                    if (W2) begin // 修改 PC 后取第一条指令，并使 PC 指向下一条。
-                        LIR = 1'b1;
-                        PCINC = 1'b1;
+                        SHORT = 1'b1;
                     end
                 end
                 else begin
