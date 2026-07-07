@@ -206,7 +206,7 @@ module pipelined_hardwired_controller (
                                 LIR = 1'b1;
                             end
                         end
-                        4'b0001: begin // ADD：执行加法，结果写回寄存器并更新 Z 标志。
+                        4'b0001: begin // ADD：执行加法，结果写回寄存器并更新 Z/C 标志。
                             if (W1) begin // 短周期：ALU 加法结果经 ABUS 写回，同时取下一条指令。
                                 DRW = 1'b1;
                                 SHORT = 1'b1;
@@ -215,6 +215,7 @@ module pipelined_hardwired_controller (
                                 CIN = 1'b1;
                                 ABUS = 1'b1;
                                 LDZ = 1'b1;
+                                LDC = 1'b1;
                                 S = 4'b1001;
                             end
                         end
