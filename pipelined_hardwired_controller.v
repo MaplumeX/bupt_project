@@ -349,6 +349,7 @@ module pipelined_hardwired_controller (
                                 ABUS = 1'b1;
                                 LDZ = 1'b1;
                                 M = 1'b1;
+                                S = 4'b0100; // active-high 74181 逻辑模式: F = /A
                             end
                         end
                         4'b1110: begin // STP：停机，拉高 STOP 保持暂停状态。
