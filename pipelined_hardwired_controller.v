@@ -126,10 +126,10 @@ module pipelined_hardwired_controller (
                    (IR7_IR4 == 4'b0100) || // INC
                    (IR7_IR4 == 4'b0111 && !C) || // JC 不跳转
                    (IR7_IR4 == 4'b1000 && !Z) || // JZ 不跳转
-                   (IR7_IR4 == 4'b1011) || // MOV
-                   (IR7_IR4 == 4'b1100) || // CMP
-                   (IR7_IR4 == 4'b1101) || // NOT
-                   (IR7_IR4 == 4'b1111)    // DEC
+                   (IR7_IR4 == 4'b1100) || // MOV
+                   (IR7_IR4 == 4'b1101) || // CMP
+                   (IR7_IR4 == 4'b1111) || // NOT
+                   (IR7_IR4 == 4'b1011)    // DEC
                )) ||
                (W2 && (
                    (IR7_IR4 == 4'b0101) || // LD
@@ -166,11 +166,11 @@ module pipelined_hardwired_controller (
     wire JC    = (IR7_IR4 == 4'b0111) & INS_FETCH & ST0; // 进位则跳
     wire JZ    = (IR7_IR4 == 4'b1000) & INS_FETCH & ST0; // 零则跳
     wire JMP   = (IR7_IR4 == 4'b1001) & INS_FETCH & ST0; // 无条件跳转
-    wire MOV   = (IR7_IR4 == 4'b1011) & INS_FETCH & ST0; // 寄存器间传送
-    wire CMP   = (IR7_IR4 == 4'b1100) & INS_FETCH & ST0; // 比较，只更新 Z/C
-    wire NOT_  = (IR7_IR4 == 4'b1101) & INS_FETCH & ST0; // 取反（NOT 为关键字）
+    wire MOV   = (IR7_IR4 == 4'b1100) & INS_FETCH & ST0; // 寄存器间传送
+    wire CMP   = (IR7_IR4 == 4'b1101) & INS_FETCH & ST0; // 比较，只更新 Z/C
+    wire NOT_  = (IR7_IR4 == 4'b1111) & INS_FETCH & ST0; // 取反（NOT 为关键字）
     wire STP   = (IR7_IR4 == 4'b1110) & INS_FETCH & ST0; // 停机
-    wire DEC   = (IR7_IR4 == 4'b1111) & INS_FETCH & ST0; // 自减
+    wire DEC   = (IR7_IR4 == 4'b1011) & INS_FETCH & ST0; // 自减
     wire NOP   = (IR7_IR4 == 4'b0000) & INS_FETCH & ST0; // 空操作
 
     // 短指令集合：单拍完成执行并取下一条指令（条件跳转不成立时也属短指令）。
